@@ -1,13 +1,47 @@
-<svg width="728" height="720" viewBox="0 0 728 720" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Letter 'e' -->
-  <path d="M85.5 163.5C177.5 163.5 177.5 164 177.5 231.5C177.5 299 177 299 85 299L85.5 231.5M85.5 163.5V556.5M177.5 163.5C177.5 90 177.5 90 85.5 90V163.5M85.5 163.5H272.5M85.5 299H272.5M85.5 299V372M85.5 372V556.5M85.5 372H341.5" fill="#9FA3A8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 728 720">
+  <!-- Letter 'e' and 'g' ligature in gray -->
+  <g fill="#9FA3A8">
+    <!-- Letter 'e' -->
+    <!-- Main vertical stroke on left -->
+    <path d="M 14,10 L 84,10 L 84,700 L 14,700 Z"/>
 
-  <!-- Letter 'g' -->
-  <path d="M303 231.5C303 164 302.5 163.5 394.5 163.5V556.5C394.5 624 395 624.5 303 624.5C211 624.5 210.5 624 210.5 556.5V360M303 231.5C303 299 302.5 299.5 210.5 299.5V360M303 231.5C303.5 231.5 303.5 231 303.5 163.5C303.5 96 303 95.5 395 95.5C487 95.5 487.5 96 487.5 163.5V360M487.5 360H667M487.5 360V231.5M487.5 231.5H667" fill="#9FA3A8"/>
+    <!-- Top horizontal bar -->
+    <path d="M 14,10 L 270,10 L 270,80 L 84,80 L 84,10 L 14,10 Z"/>
 
-  <!-- Letter 'r' -->
-  <path d="M529 90V556.5M529 299.5V372M529 299.5H620.5M529 299.5V163.5M529 163.5V90M529 163.5C529 163.5 529 164 620.5 164C712.5 164 713 163.5 713 96C713 28.5 712.5 28 620.5 28C528.5 28 528.5 28.5 528.5 96V163.5" fill="#9FA3A8"/>
+    <!-- Middle horizontal bar -->
+    <path d="M 14,155 L 270,155 L 270,225 L 84,225 L 84,155 L 14,155 Z"/>
 
-  <!-- Red square/dot -->
-  <path d="M663 181.5H714.5V233H663V181.5Z" fill="#C23941"/>
+    <!-- Bottom horizontal bar with extension -->
+    <path d="M 14,485 L 340,485 L 340,555 L 84,555 L 84,485 L 14,485 Z"/>
+
+    <!-- Letter 'g' (connected/ligature) -->
+    <!-- Top bowl left vertical -->
+    <path d="M 300,55 L 370,55 L 370,255 L 300,255 Z"/>
+
+    <!-- Top bowl top horizontal -->
+    <path d="M 300,55 L 485,55 L 485,125 L 370,125 L 370,55 L 300,55 Z"/>
+
+    <!-- Main right vertical of 'g' -->
+    <path d="M 415,55 L 485,55 L 485,625 L 415,625 Z"/>
+
+    <!-- Middle top horizontal extension -->
+    <path d="M 485,155 L 655,155 L 655,225 L 555,225 L 555,155 L 485,155 Z"/>
+
+    <!-- Middle horizontal bar in 'g' -->
+    <path d="M 300,285 L 555,285 L 555,355 L 485,355 L 485,285 L 300,285 Z"/>
+
+    <!-- Bottom bowl left vertical -->
+    <path d="M 230,355 L 300,355 L 300,605 L 230,605 Z"/>
+
+    <!-- Bottom bowl bottom horizontal -->
+    <path d="M 230,625 L 485,625 L 485,695 L 300,695 L 300,625 L 230,625 Z"/>
+
+    <!-- Connection bars between e and g -->
+    <path d="M 230,355 L 340,355 L 340,425 L 300,425 L 300,355 L 230,355 Z"/>
+
+    <path d="M 230,485 L 340,485 L 340,555 L 300,555 L 300,485 L 230,485 Z"/>
+  </g>
+
+  <!-- Red square -->
+  <rect x="663" y="181" width="52" height="52" fill="#C23941"/>
 </svg>
