@@ -376,7 +376,7 @@ section {
 
 .contact-method {
     text-align: center;
-    padding: 1.5rem;
+    padding: 0.5625rem 1.5rem;
     background: var(--light-bg);
     border-radius: 10px;
     transition: all 0.3s ease;
@@ -421,14 +421,12 @@ section {
 }
 
 .contact-method h3 {
-    color: var(--dark-color);
     margin-bottom: 0.5rem;
     font-size: 1.3rem;
     transition: color 0.3s ease;
 }
 
 .contact-method a {
-    color: var(--primary-color);
     text-decoration: none;
     transition: color 0.3s ease;
     word-break: break-word;
