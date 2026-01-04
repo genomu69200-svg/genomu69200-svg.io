@@ -139,6 +139,14 @@ body {
     text-align: center;
 }
 
+.hero-logo {
+    width: 200px;
+    height: auto;
+    margin: 0 auto 2rem;
+    display: block;
+    animation: fadeInUp 0.8s ease;
+}
+
 .hero-title {
     font-size: 3.5rem;
     font-weight: 700;
@@ -522,6 +530,10 @@ section {
     .hero {
         padding: 100px 0 60px;
         min-height: 500px;
+    }
+
+    .hero-logo {
+        width: 150px;
     }
 
     .hero-title {
