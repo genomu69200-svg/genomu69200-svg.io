@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 728 720">
+  <!-- Letter 'e' and 'g' ligature in gray -->
+  <g fill="#9FA3A8">
+    <!-- Letter 'e' -->
+    <!-- Main vertical stroke on left -->
+    <path d="M 14,10 L 84,10 L 84,700 L 14,700 Z"/>
+
+    <!-- Top horizontal bar -->
+    <path d="M 14,10 L 270,10 L 270,80 L 84,80 L 84,10 L 14,10 Z"/>
+
+    <!-- Middle horizontal bar -->
+    <path d="M 14,155 L 270,155 L 270,225 L 84,225 L 84,155 L 14,155 Z"/>
+
+    <!-- Bottom horizontal bar with extension -->
+    <path d="M 14,485 L 340,485 L 340,555 L 84,555 L 84,485 L 14,485 Z"/>
+
+    <!-- Letter 'g' (connected/ligature) -->
+    <!-- Top bowl left vertical -->
+    <path d="M 300,55 L 370,55 L 370,255 L 300,255 Z"/>
+
+    <!-- Top bowl top horizontal -->
+    <path d="M 300,55 L 485,55 L 485,125 L 370,125 L 370,55 L 300,55 Z"/>
+
+    <!-- Main right vertical of 'g' -->
+    <path d="M 415,55 L 485,55 L 485,625 L 415,625 Z"/>
+
+    <!-- Middle top horizontal extension -->
+    <path d="M 485,155 L 655,155 L 655,225 L 555,225 L 555,155 L 485,155 Z"/>
+
+    <!-- Middle horizontal bar in 'g' -->
+    <path d="M 300,285 L 555,285 L 555,355 L 485,355 L 485,285 L 300,285 Z"/>
+
+    <!-- Bottom bowl left vertical -->
+    <path d="M 230,355 L 300,355 L 300,605 L 230,605 Z"/>
+
+    <!-- Bottom bowl bottom horizontal -->
+    <path d="M 230,625 L 485,625 L 485,695 L 300,695 L 300,625 L 230,625 Z"/>
+
+    <!-- Connection bars between e and g -->
+    <path d="M 230,355 L 340,355 L 340,425 L 300,425 L 300,355 L 230,355 Z"/>
+
+    <path d="M 230,485 L 340,485 L 340,555 L 300,555 L 300,485 L 230,485 Z"/>
+  </g>
+
+  <!-- Red square -->
+  <rect x="663" y="181" width="52" height="52" fill="#C23941"/>
+</svg>
