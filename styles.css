@@ -376,21 +376,43 @@ section {
 
 .contact-method {
     text-align: center;
-    padding: 2rem;
+    padding: 1.5rem;
     background: var(--light-bg);
     border-radius: 10px;
     transition: all 0.3s ease;
 }
 
-.contact-method:hover {
+.contact-email {
     background: var(--primary-color);
     color: var(--white);
-    transform: translateY(-5px);
 }
 
-.contact-method:hover h3,
-.contact-method:hover a {
+.contact-email h3,
+.contact-email a {
     color: var(--white);
+}
+
+.contact-linkedin {
+    background: var(--secondary-color);
+    color: var(--white);
+}
+
+.contact-linkedin h3,
+.contact-linkedin a {
+    color: var(--white);
+}
+
+.contact-method:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.contact-email:hover {
+    background: var(--dark-color);
+}
+
+.contact-linkedin:hover {
+    background: var(--dark-color);
 }
 
 .contact-icon {
