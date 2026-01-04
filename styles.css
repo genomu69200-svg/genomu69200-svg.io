@@ -140,9 +140,10 @@ body {
 }
 
 .hero-logo {
-    width: 200px;
+    width: 500px;
+    max-width: 90vw;
     height: auto;
-    margin: 0 auto 2rem;
+    margin: 0 auto;
     display: block;
     animation: fadeInUp 0.8s ease;
 }
@@ -533,7 +534,8 @@ section {
     }
 
     .hero-logo {
-        width: 150px;
+        width: 300px;
+        max-width: 90vw;
     }
 
     .hero-title {
