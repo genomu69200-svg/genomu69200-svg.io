@@ -144,12 +144,16 @@ body {
 }
 
 .hero-logo {
-    width: 500px;
-    max-width: 90vw;
-    height: auto;
+    width: 60px;
+    height: 60px;
     margin: 0 auto;
     display: block;
     animation: fadeInUp 0.8s ease;
+    border-radius: 50%;
+    border: 7px solid #CC5500;
+    background-color: #D3D3D3;
+    object-fit: contain;
+    padding: 5px;
 }
 
 .hero-title {
@@ -538,8 +542,8 @@ section {
     }
 
     .hero-logo {
-        width: 300px;
-        max-width: 90vw;
+        width: 50px;
+        height: 50px;
     }
 
     .hero-title {
