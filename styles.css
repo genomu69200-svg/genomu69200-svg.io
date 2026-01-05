@@ -61,10 +61,10 @@ body {
 }
 
 .brand-logo {
-    width: 56px;
-    height: 56px;
+    width: 54px;
+    height: 54px;
     border-radius: 50%;
-    border: 5px solid #CC5500;
+    border: 5px solid #6B7C98;
     background-color: #D3D3D3;
     object-fit: contain;
     padding: 12px;
@@ -145,13 +145,13 @@ body {
 }
 
 .hero-logo {
-    width: 92px;
-    height: 92px;
+    width: 87px;
+    height: 87px;
     margin: 0 auto;
     display: block;
     animation: fadeInUp 0.8s ease;
     border-radius: 50%;
-    border: 7px solid #CC5500;
+    border: 7px solid #6B7C98;
     background-color: #D3D3D3;
     object-fit: contain;
     padding: 15px;
