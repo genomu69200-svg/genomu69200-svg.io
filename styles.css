@@ -280,7 +280,9 @@ section {
     gap: 2rem;
     margin-top: 2rem;
     justify-content: center;
-    max-width: 720px;
+    justify-items: center;
+    max-width: 100%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -292,6 +294,8 @@ section {
     text-align: center;
     transition: all 0.3s ease;
     box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 720px;
 }
 
 .skill-card:hover {
