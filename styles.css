@@ -388,6 +388,26 @@ section {
     border-radius: 15px;
     font-size: 0.85rem;
     font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid var(--primary-color);
+}
+
+.tag:hover {
+    background: var(--dark-color);
+    border-color: var(--dark-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tag.active {
+    background: var(--secondary-color);
+    border-color: var(--secondary-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.project-card.hidden {
+    display: none;
 }
 
 /* ===== Contact Section ===== */

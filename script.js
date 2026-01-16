@@ -72,3 +72,49 @@ document.querySelectorAll('.skill-card, .project-card, .contact-method').forEach
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(el);
 });
+
+// Project Tag Filtering
+let activeFilter = null;
+
+function filterProjects(filterTag) {
+    const projectCards = document.querySelectorAll('.project-card');
+    const allTags = document.querySelectorAll('.tag');
+
+    // If clicking the same tag, clear the filter
+    if (activeFilter === filterTag) {
+        activeFilter = null;
+        projectCards.forEach(card => card.classList.remove('hidden'));
+        allTags.forEach(tag => tag.classList.remove('active'));
+        return;
+    }
+
+    // Set new active filter
+    activeFilter = filterTag;
+
+    // Update tag active states
+    allTags.forEach(tag => {
+        if (tag.textContent === filterTag) {
+            tag.classList.add('active');
+        } else {
+            tag.classList.remove('active');
+        }
+    });
+
+    // Filter project cards
+    projectCards.forEach(card => {
+        const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent);
+        if (tags.includes(filterTag)) {
+            card.classList.remove('hidden');
+        } else {
+            card.classList.add('hidden');
+        }
+    });
+}
+
+// Add click event listeners to all tags
+document.querySelectorAll('.tag').forEach(tag => {
+    tag.addEventListener('click', function(e) {
+        e.preventDefault();
+        filterProjects(this.textContent);
+    });
+});
