@@ -476,6 +476,20 @@ section {
     color: var(--white);
 }
 
+.contact-work {
+    background: var(--dark-color);
+    color: var(--white);
+}
+
+.contact-work h3,
+.contact-work h3 a {
+    color: var(--white);
+}
+
+.contact-work a {
+    text-decoration: none;
+}
+
 .contact-method:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-lg);
@@ -487,6 +501,10 @@ section {
 
 .contact-linkedin:hover {
     background: var(--dark-color);
+}
+
+.contact-work:hover {
+    background: var(--primary-color);
 }
 
 .contact-icon {
