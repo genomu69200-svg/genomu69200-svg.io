@@ -61,8 +61,6 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
             padding: 2rem;
             max-width: 1200px;
             margin: 0 auto;
@@ -73,69 +71,88 @@
             display: flex;
             gap: 1rem;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             background: var(--white);
             padding: 1rem;
             border-radius: 8px;
             box-shadow: var(--shadow);
+            flex-wrap: wrap;
         }
 
-        .pdf-controls button {
-            padding: 8px 16px;
+        .control-button {
+            padding: 10px 20px;
             background: var(--primary-color);
             color: var(--white);
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
             transition: all 0.3s ease;
+            font-size: 0.95rem;
         }
 
-        .pdf-controls button:hover {
+        .control-button:hover {
             background: var(--dark-color);
             transform: translateY(-1px);
+            box-shadow: var(--shadow);
         }
 
-        .pdf-controls button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .page-info {
-            font-weight: 600;
-            color: var(--dark-color);
-        }
-
-        .download-button {
-            padding: 8px 16px;
+        .control-button.secondary {
             background: var(--secondary-color);
-            color: var(--white);
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
         }
 
-        .download-button:hover {
+        .control-button.secondary:hover {
             background: #555;
-            transform: translateY(-1px);
         }
 
-        #pdf-display-container {
-            width: 100%;
+        .pdf-viewer-wrapper {
+            flex: 1;
             background: var(--white);
             box-shadow: var(--shadow-lg);
             border-radius: 8px;
             overflow: hidden;
             min-height: 800px;
+            display: flex;
+            flex-direction: column;
         }
 
-        #pdf-display-container object,
-        #pdf-display-container embed {
-            border-radius: 8px;
+        .pdf-object {
+            width: 100%;
+            height: 100%;
+            min-height: 800px;
+            border: none;
+        }
+
+        .pdf-fallback {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 2rem;
+            text-align: center;
+            min-height: 400px;
+        }
+
+        .pdf-fallback h3 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .pdf-fallback p {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            max-width: 600px;
+        }
+
+        .pdf-fallback-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         @media (max-width: 768px) {
@@ -150,11 +167,14 @@
             }
 
             .pdf-controls {
-                flex-wrap: wrap;
                 justify-content: center;
             }
 
-            #pdf-display-container {
+            .pdf-viewer-wrapper {
+                min-height: 600px;
+            }
+
+            .pdf-object {
                 min-height: 600px;
             }
         }
@@ -174,149 +194,62 @@
 
         <div class="pdf-content">
             <div class="pdf-controls">
-                <a href="assets/WRH_GME_Fact_Sheet.pdf" download class="download-button">Download PDF</a>
-                <a href="assets/WRH_GME_Fact_Sheet.pdf" target="_blank" class="download-button" style="background: var(--primary-color);">Open in New Tab</a>
+                <a href="assets/WRH_GME_Fact_Sheet.pdf" target="_blank" class="control-button">
+                    Open in New Tab
+                </a>
+                <a href="assets/WRH_GME_Fact_Sheet.pdf" download class="control-button secondary">
+                    Download PDF
+                </a>
             </div>
-            <div id="pdf-display-container">
-                <iframe
-                    id="pdf-iframe"
-                    src="assets/WRH_GME_Fact_Sheet.pdf"
-                    width="100%"
-                    height="100%"
-                    title="WRH GME Fact Sheet PDF Document"
-                    aria-label="PDF viewer showing Western Reserve Hospital GME Fact Sheet"
-                    style="min-height: 800px; border: none;">
-                </iframe>
-                <div id="pdf-fallback" style="display: none; padding: 2rem; text-align: center; background: var(--white); border-radius: 8px;">
-                    <p style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--dark-color);">
-                        Your browser doesn't support embedded PDF viewing.
-                    </p>
-                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                        <a href="assets/WRH_GME_Fact_Sheet.pdf" target="_blank" class="download-button" style="background: var(--primary-color);">
-                            Open PDF in New Tab
-                        </a>
-                        <a href="assets/WRH_GME_Fact_Sheet.pdf" download class="download-button">
-                            Download PDF
-                        </a>
+
+            <div class="pdf-viewer-wrapper">
+                <object
+                    id="pdf-object"
+                    data="assets/WRH_GME_Fact_Sheet.pdf#toolbar=1&navpanes=0&scrollbar=1"
+                    type="application/pdf"
+                    class="pdf-object">
+
+                    <!-- Fallback content if object tag doesn't work -->
+                    <div class="pdf-fallback">
+                        <h3>PDF Preview Not Available</h3>
+                        <p>Your browser cannot display this PDF inline. Please use one of the options below to view the document.</p>
+                        <div class="pdf-fallback-buttons">
+                            <a href="assets/WRH_GME_Fact_Sheet.pdf" target="_blank" class="control-button">
+                                Open PDF in New Tab
+                            </a>
+                            <a href="assets/WRH_GME_Fact_Sheet.pdf" download class="control-button secondary">
+                                Download PDF File
+                            </a>
+                        </div>
                     </div>
-                </div>
+                </object>
             </div>
         </div>
     </div>
 
     <script>
-        // Cross-browser PDF viewer with feature detection
+        // Simple PDF viewer with graceful fallback
         (function() {
-            const pdfUrl = 'assets/WRH_GME_Fact_Sheet.pdf';
-            const iframe = document.getElementById('pdf-iframe');
-            const fallback = document.getElementById('pdf-fallback');
-            const container = document.getElementById('pdf-display-container');
+            const pdfObject = document.getElementById('pdf-object');
 
-            // Detect browser and capabilities
-            const userAgent = navigator.userAgent.toLowerCase();
-            const isIOS = /iphone|ipod|ipad/.test(userAgent);
-            const isAndroid = /android/.test(userAgent);
-            const isSafari = /safari/.test(userAgent) && !/chrome/.test(userAgent);
-            const isFirefox = /firefox/.test(userAgent);
-            const isChrome = /chrome/.test(userAgent) && !/edge/.test(userAgent);
-            const isEdge = /edg/.test(userAgent);
-            const isMobile = isIOS || isAndroid || window.innerWidth < 768;
+            // Log for debugging
+            console.log('PDF Viewer initialized');
+            console.log('PDF URL:', pdfObject.data);
 
-            // Check if browser supports PDF viewing
-            function checkPDFSupport() {
-                // Chrome, Edge, Firefox, and modern browsers support PDF
-                if (isChrome || isEdge || isFirefox) {
-                    return true;
-                }
-
-                // Safari desktop usually supports PDF in iframe
-                if (isSafari && !isMobile) {
-                    return true;
-                }
-
-                // Check for PDF MIME type support
-                const mimeTypes = navigator.mimeTypes;
-                if (mimeTypes && mimeTypes['application/pdf']) {
-                    const pdfPlugin = mimeTypes['application/pdf'];
-                    if (pdfPlugin && pdfPlugin.enabledPlugin) {
-                        return true;
+            // Check if PDF loaded after a short delay
+            setTimeout(function() {
+                try {
+                    // Test if object loaded successfully
+                    if (pdfObject.offsetHeight === 0) {
+                        console.log('PDF object failed to load, fallback content should be visible');
+                    } else {
+                        console.log('PDF object appears to have loaded successfully');
                     }
+                } catch (e) {
+                    console.error('Error checking PDF load status:', e);
                 }
-
-                return false;
-            }
-
-            // Initialize PDF viewer with appropriate method
-            function initPDFViewer() {
-                const hasPDFSupport = checkPDFSupport();
-
-                if (hasPDFSupport) {
-                    // Use iframe for browsers with native PDF support
-                    iframe.style.display = 'block';
-
-                    // Browser-specific URL parameters for better display
-                    let pdfSrc = pdfUrl;
-
-                    // Add view parameters for compatible browsers
-                    // Chrome/Edge support these parameters
-                    if (isChrome || isEdge) {
-                        pdfSrc += '#view=FitH&toolbar=1&navpanes=0';
-                    }
-                    // Firefox supports different parameters
-                    else if (isFirefox) {
-                        pdfSrc += '#zoom=page-fit';
-                    }
-                    // Safari - keep it simple, parameters often ignored
-
-                    iframe.src = pdfSrc;
-
-                    // Add load error handling
-                    iframe.onerror = function() {
-                        showFallback();
-                    };
-
-                    // Timeout fallback for loading issues
-                    const loadTimeout = setTimeout(function() {
-                        // Check if iframe loaded successfully
-                        try {
-                            if (!iframe.contentWindow || !iframe.contentDocument) {
-                                showFallback();
-                            }
-                        } catch (e) {
-                            // Cross-origin or other access issues - iframe is likely working
-                            // Don't show fallback
-                        }
-                    }, 5000);
-
-                    iframe.onload = function() {
-                        clearTimeout(loadTimeout);
-                    };
-                } else {
-                    // Show fallback for browsers without PDF support
-                    showFallback();
-                }
-
-                // Mobile-specific handling
-                if (isMobile && isIOS) {
-                    // iOS Safari often opens PDFs in its own viewer
-                    // Adjust iframe height for better mobile experience
-                    iframe.style.minHeight = '600px';
-                }
-            }
-
-            function showFallback() {
-                if (iframe) iframe.style.display = 'none';
-                if (fallback) fallback.style.display = 'block';
-            }
-
-            // Initialize on DOM ready
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initPDFViewer);
-            } else {
-                initPDFViewer();
-            }
+            }, 2000);
         })();
     </script>
-
 </body>
 </html>
