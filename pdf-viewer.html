@@ -175,15 +175,17 @@
         <div class="pdf-content">
             <div class="pdf-controls">
                 <a href="assets/WRH_GME_Fact_Sheet.pdf" download class="download-button">Download PDF</a>
+                <a href="assets/WRH_GME_Fact_Sheet.pdf" target="_blank" class="download-button" style="background: var(--primary-color);">Open in New Tab</a>
             </div>
             <div id="pdf-display-container">
-                <!-- Native PDF embed as primary method -->
-                <object data="assets/WRH_GME_Fact_Sheet.pdf" type="application/pdf" width="100%" height="100%" style="min-height: 800px;">
-                    <embed src="assets/WRH_GME_Fact_Sheet.pdf" type="application/pdf" width="100%" height="100%" style="min-height: 800px;">
-                        <p>Your browser does not support embedded PDFs.
-                           <a href="assets/WRH_GME_Fact_Sheet.pdf" download>Download the PDF</a> to view it.</p>
-                    </embed>
-                </object>
+                <iframe
+                    src="assets/WRH_GME_Fact_Sheet.pdf#view=FitH"
+                    width="100%"
+                    height="100%"
+                    style="min-height: 800px; border: none;">
+                    <p>Your browser does not support PDF viewing.
+                       <a href="assets/WRH_GME_Fact_Sheet.pdf" target="_blank">Open the PDF in a new tab</a> instead.</p>
+                </iframe>
             </div>
         </div>
     </div>
