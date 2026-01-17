@@ -111,8 +111,8 @@ function filterProjects(filterTag) {
     });
 }
 
-// Add click event listeners to all tags
-document.querySelectorAll('.tag').forEach(tag => {
+// Add click event listeners to all tags (except links)
+document.querySelectorAll('.tag:not(.tag-link)').forEach(tag => {
     tag.addEventListener('click', function(e) {
         e.preventDefault();
         filterProjects(this.textContent);
