@@ -179,7 +179,7 @@
                     Page <span id="page-num">1</span> of <span id="page-count">-</span>
                 </span>
                 <button id="next-page">Next</button>
-                <a href="WRH_GME_Fact_Sheet.pdf" download class="download-button">Download PDF</a>
+                <a href="assets/WRH_GME_Fact_Sheet.pdf" download class="download-button">Download PDF</a>
             </div>
             <div id="pdf-canvas-container">
                 <canvas id="pdf-canvas"></canvas>
@@ -190,7 +190,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>
         // PDF.js configuration
-        const url = 'WRH_GME_Fact_Sheet.pdf';
+        const url = 'assets/WRH_GME_Fact_Sheet.pdf';
 
         let pdfDoc = null;
         let pageNum = 1;
@@ -281,7 +281,7 @@
         }).catch(function(error) {
             console.error('Error loading PDF:', error);
             document.getElementById('pdf-canvas-container').innerHTML =
-                '<p style="padding: 2rem; text-align: center;">Error loading PDF. <a href="WRH_GME_Fact_Sheet.pdf" download>Download the PDF</a> instead.</p>';
+                '<p style="padding: 2rem; text-align: center;">Error loading PDF. <a href="assets/WRH_GME_Fact_Sheet.pdf" download>Download the PDF</a> instead.</p>';
         });
     </script>
 </body>
