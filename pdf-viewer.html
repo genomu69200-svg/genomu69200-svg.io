@@ -124,34 +124,18 @@
             transform: translateY(-1px);
         }
 
-        #pdf-canvas-container {
+        #pdf-display-container {
             width: 100%;
             background: var(--white);
             box-shadow: var(--shadow-lg);
             border-radius: 8px;
-            overflow: auto;
-            max-height: calc(100vh - 250px);
-            min-height: 600px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            overflow: hidden;
+            min-height: 800px;
         }
 
-        #pdf-canvas {
-            display: block;
-            margin: 0 auto;
-        }
-
-        .loading-message {
-            text-align: center;
-            padding: 2rem;
-            color: var(--dark-color);
-        }
-
-        .error-message {
-            text-align: center;
-            padding: 2rem;
-            color: #d32f2f;
+        #pdf-display-container object,
+        #pdf-display-container embed {
+            border-radius: 8px;
         }
 
         @media (max-width: 768px) {
@@ -170,8 +154,8 @@
                 justify-content: center;
             }
 
-            #pdf-canvas-container {
-                max-height: calc(100vh - 300px);
+            #pdf-display-container {
+                min-height: 600px;
             }
         }
     </style>
@@ -190,133 +174,19 @@
 
         <div class="pdf-content">
             <div class="pdf-controls">
-                <button id="prev-page">Previous</button>
-                <span class="page-info">
-                    Page <span id="page-num">1</span> of <span id="page-count">-</span>
-                </span>
-                <button id="next-page">Next</button>
                 <a href="assets/WRH_GME_Fact_Sheet.pdf" download class="download-button">Download PDF</a>
             </div>
-            <div id="pdf-canvas-container">
-                <div class="loading-message">Loading PDF...</div>
-                <canvas id="pdf-canvas" style="display:none;"></canvas>
+            <div id="pdf-display-container">
+                <!-- Native PDF embed as primary method -->
+                <object data="assets/WRH_GME_Fact_Sheet.pdf" type="application/pdf" width="100%" height="100%" style="min-height: 800px;">
+                    <embed src="assets/WRH_GME_Fact_Sheet.pdf" type="application/pdf" width="100%" height="100%" style="min-height: 800px;">
+                        <p>Your browser does not support embedded PDFs.
+                           <a href="assets/WRH_GME_Fact_Sheet.pdf" download>Download the PDF</a> to view it.</p>
+                    </embed>
+                </object>
             </div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <script>
-        // Check if PDF.js loaded
-        if (typeof pdfjsLib === 'undefined') {
-            document.getElementById('pdf-canvas-container').innerHTML =
-                '<div class="error-message">Error: PDF.js library failed to load.<br><a href="assets/WRH_GME_Fact_Sheet.pdf" download>Download the PDF</a> instead.</div>';
-        } else {
-            // PDF.js configuration
-            const url = 'assets/WRH_GME_Fact_Sheet.pdf';
-
-            let pdfDoc = null;
-            let pageNum = 1;
-            let pageRendering = false;
-            let pageNumPending = null;
-            let scale = 1.5;
-
-            const canvas = document.getElementById('pdf-canvas');
-            const ctx = canvas.getContext('2d');
-            const container = document.getElementById('pdf-canvas-container');
-
-            // Configure PDF.js worker
-            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-            // Render the page
-            function renderPage(num) {
-                pageRendering = true;
-                pdfDoc.getPage(num).then(function(page) {
-                    const viewport = page.getViewport({ scale: scale });
-                    canvas.height = viewport.height;
-                    canvas.width = viewport.width;
-
-                    const renderContext = {
-                        canvasContext: ctx,
-                        viewport: viewport
-                    };
-
-                    const renderTask = page.render(renderContext);
-
-                    renderTask.promise.then(function() {
-                        pageRendering = false;
-                        if (pageNumPending !== null) {
-                            renderPage(pageNumPending);
-                            pageNumPending = null;
-                        }
-                        // Show canvas and hide loading message
-                        canvas.style.display = 'block';
-                        const loadingMsg = container.querySelector('.loading-message');
-                        if (loadingMsg) loadingMsg.remove();
-                    });
-                }).catch(function(error) {
-                    console.error('Error rendering page:', error);
-                    container.innerHTML =
-                        '<div class="error-message">Error rendering page ' + num + '.<br><a href="assets/WRH_GME_Fact_Sheet.pdf" download>Download the PDF</a> instead.</div>';
-                });
-
-                document.getElementById('page-num').textContent = num;
-            }
-
-            // Queue page rendering
-            function queueRenderPage(num) {
-                if (pageRendering) {
-                    pageNumPending = num;
-                } else {
-                    renderPage(num);
-                }
-            }
-
-            // Previous page
-            function onPrevPage() {
-                if (pageNum <= 1) {
-                    return;
-                }
-                pageNum--;
-                queueRenderPage(pageNum);
-                updateButtons();
-            }
-
-            // Next page
-            function onNextPage() {
-                if (pageNum >= pdfDoc.numPages) {
-                    return;
-                }
-                pageNum++;
-                queueRenderPage(pageNum);
-                updateButtons();
-            }
-
-            // Update button states
-            function updateButtons() {
-                document.getElementById('prev-page').disabled = (pageNum <= 1);
-                document.getElementById('next-page').disabled = (pageNum >= pdfDoc.numPages);
-            }
-
-            // Event listeners
-            document.getElementById('prev-page').addEventListener('click', onPrevPage);
-            document.getElementById('next-page').addEventListener('click', onNextPage);
-
-            // Load the PDF
-            console.log('Loading PDF from:', url);
-            pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
-                pdfDoc = pdfDoc_;
-                console.log('PDF loaded successfully. Pages:', pdfDoc.numPages);
-                document.getElementById('page-count').textContent = pdfDoc.numPages;
-
-                // Initial/first page rendering
-                renderPage(pageNum);
-                updateButtons();
-            }).catch(function(error) {
-                console.error('Error loading PDF:', error);
-                container.innerHTML =
-                    '<div class="error-message">Error loading PDF: ' + error.message + '<br><br>Please check the browser console for details.<br><a href="assets/WRH_GME_Fact_Sheet.pdf" download>Download the PDF</a> instead.</div>';
-            });
-        }
-    </script>
 </body>
 </html>
