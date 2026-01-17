@@ -408,6 +408,15 @@ section {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.tag-link {
+    text-decoration: none;
+    display: inline-block;
+}
+
+.tag-link:hover {
+    color: var(--white);
+}
+
 .tag.active {
     background: var(--secondary-color);
     border-color: var(--secondary-color);
