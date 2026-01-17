@@ -477,17 +477,13 @@ section {
 }
 
 .contact-work {
-    background: var(--dark-color);
+    background: #CC5500;
     color: var(--white);
 }
 
 .contact-work h3,
-.contact-work h3 a {
-    color: var(--white);
-}
-
 .contact-work a {
-    text-decoration: none;
+    color: var(--white);
 }
 
 .contact-method:hover {
