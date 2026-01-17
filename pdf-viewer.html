@@ -60,18 +60,82 @@
         .pdf-content {
             flex: 1;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 2rem 0;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
 
-        .pdf-viewer {
-            width: 100%;
-            max-width: 1200px;
-            height: calc(100vh - 150px);
-            border: none;
-            box-shadow: var(--shadow-lg);
+        .pdf-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
             background: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .pdf-controls button {
+            padding: 8px 16px;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .pdf-controls button:hover {
+            background: var(--dark-color);
+            transform: translateY(-1px);
+        }
+
+        .pdf-controls button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .page-info {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .download-button {
+            padding: 8px 16px;
+            background: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .download-button:hover {
+            background: #555;
+            transform: translateY(-1px);
+        }
+
+        #pdf-canvas-container {
+            width: 100%;
+            background: var(--white);
+            box-shadow: var(--shadow-lg);
+            border-radius: 8px;
+            overflow: auto;
+            max-height: calc(100vh - 250px);
+        }
+
+        #pdf-canvas {
+            display: block;
+            margin: 0 auto;
         }
 
         @media (max-width: 768px) {
@@ -85,8 +149,13 @@
                 font-size: 1.2rem;
             }
 
-            .pdf-viewer {
-                height: calc(100vh - 180px);
+            .pdf-controls {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            #pdf-canvas-container {
+                max-height: calc(100vh - 300px);
             }
         }
     </style>
@@ -104,14 +173,116 @@
         </div>
 
         <div class="pdf-content">
-            <iframe
-                class="pdf-viewer"
-                src="WRH_GME_Fact_Sheet.pdf#toolbar=1&navpanes=1&scrollbar=1&view=FitH"
-                type="application/pdf">
-                <p>Your browser does not support PDFs.
-                   <a href="WRH_GME_Fact_Sheet.pdf" download>Download the PDF</a> instead.</p>
-            </iframe>
+            <div class="pdf-controls">
+                <button id="prev-page">Previous</button>
+                <span class="page-info">
+                    Page <span id="page-num">1</span> of <span id="page-count">-</span>
+                </span>
+                <button id="next-page">Next</button>
+                <a href="WRH_GME_Fact_Sheet.pdf" download class="download-button">Download PDF</a>
+            </div>
+            <div id="pdf-canvas-container">
+                <canvas id="pdf-canvas"></canvas>
+            </div>
         </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        // PDF.js configuration
+        const url = 'WRH_GME_Fact_Sheet.pdf';
+
+        let pdfDoc = null;
+        let pageNum = 1;
+        let pageRendering = false;
+        let pageNumPending = null;
+        let scale = 1.5;
+
+        const canvas = document.getElementById('pdf-canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Configure PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        // Render the page
+        function renderPage(num) {
+            pageRendering = true;
+            pdfDoc.getPage(num).then(function(page) {
+                const viewport = page.getViewport({ scale: scale });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+
+                const renderTask = page.render(renderContext);
+
+                renderTask.promise.then(function() {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+
+            document.getElementById('page-num').textContent = num;
+        }
+
+        // Queue page rendering
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+
+        // Previous page
+        function onPrevPage() {
+            if (pageNum <= 1) {
+                return;
+            }
+            pageNum--;
+            queueRenderPage(pageNum);
+            updateButtons();
+        }
+
+        // Next page
+        function onNextPage() {
+            if (pageNum >= pdfDoc.numPages) {
+                return;
+            }
+            pageNum++;
+            queueRenderPage(pageNum);
+            updateButtons();
+        }
+
+        // Update button states
+        function updateButtons() {
+            document.getElementById('prev-page').disabled = (pageNum <= 1);
+            document.getElementById('next-page').disabled = (pageNum >= pdfDoc.numPages);
+        }
+
+        // Event listeners
+        document.getElementById('prev-page').addEventListener('click', onPrevPage);
+        document.getElementById('next-page').addEventListener('click', onNextPage);
+
+        // Load the PDF
+        pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+            pdfDoc = pdfDoc_;
+            document.getElementById('page-count').textContent = pdfDoc.numPages;
+
+            // Initial/first page rendering
+            renderPage(pageNum);
+            updateButtons();
+        }).catch(function(error) {
+            console.error('Error loading PDF:', error);
+            document.getElementById('pdf-canvas-container').innerHTML =
+                '<p style="padding: 2rem; text-align: center;">Error loading PDF. <a href="WRH_GME_Fact_Sheet.pdf" download>Download the PDF</a> instead.</p>';
+        });
+    </script>
 </body>
 </html>
