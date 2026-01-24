@@ -278,7 +278,7 @@ section {
 /* ===== Employment Disclosure Brackets ===== */
 .employment-note {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     gap: 1rem;
 }
@@ -287,9 +287,8 @@ section {
     content: '';
     display: inline-block;
     width: 30px;
-    height: 70px;
     background-image: url('assets/bracket-left.svg');
-    background-size: contain;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;
     flex-shrink: 0;
@@ -299,9 +298,8 @@ section {
     content: '';
     display: inline-block;
     width: 30px;
-    height: 70px;
     background-image: url('assets/bracket-right.svg');
-    background-size: contain;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;
     flex-shrink: 0;
