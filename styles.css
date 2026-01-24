@@ -275,6 +275,38 @@ section {
     margin-bottom: 1.5rem;
 }
 
+/* ===== Employment Disclosure Brackets ===== */
+.employment-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.employment-note::before {
+    content: '';
+    display: inline-block;
+    width: 30px;
+    height: 70px;
+    background-image: url('assets/bracket-left.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+.employment-note::after {
+    content: '';
+    display: inline-block;
+    width: 30px;
+    height: 70px;
+    background-image: url('assets/bracket-right.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+}
+
 /* ===== Skills Section ===== */
 .skills-grid {
     display: flex;
@@ -616,6 +648,16 @@ section {
 
     .section-title {
         font-size: 2rem;
+    }
+
+    .employment-note {
+        gap: 0.5rem;
+    }
+
+    .employment-note::before,
+    .employment-note::after {
+        width: 20px;
+        height: 50px;
     }
 
     .skill-card {
