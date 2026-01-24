@@ -275,6 +275,34 @@ section {
     margin-bottom: 1.5rem;
 }
 
+.employment-note {
+    position: relative;
+    padding: 0.5rem 2.5rem;
+}
+
+.employment-note::before,
+.employment-note::after {
+    position: absolute;
+    color: #CC5500;
+    font-size: 3rem;
+    font-weight: 300;
+    line-height: 1;
+}
+
+.employment-note::before {
+    content: '[';
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.employment-note::after {
+    content: ']';
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 /* ===== Skills Section ===== */
 .skills-grid {
     display: flex;
