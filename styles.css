@@ -241,34 +241,18 @@ section {
     color: var(--dark-color);
     position: relative;
     padding-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.section-title::before {
-    content: '';
-    display: inline-block;
-    width: 30px;
-    height: 70px;
-    background-image: url('assets/bracket-left.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    flex-shrink: 0;
 }
 
 .section-title::after {
     content: '';
-    display: inline-block;
-    width: 30px;
-    height: 70px;
-    background-image: url('assets/bracket-right.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    flex-shrink: 0;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 2px;
 }
 
 /* ===== About Section ===== */
@@ -289,6 +273,38 @@ section {
 
 .about-text p {
     margin-bottom: 1.5rem;
+}
+
+/* ===== Employment Disclosure Brackets ===== */
+.employment-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.employment-note::before {
+    content: '';
+    display: inline-block;
+    width: 30px;
+    height: 70px;
+    background-image: url('assets/bracket-left.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+.employment-note::after {
+    content: '';
+    display: inline-block;
+    width: 30px;
+    height: 70px;
+    background-image: url('assets/bracket-right.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
 }
 
 /* ===== Skills Section ===== */
@@ -632,11 +648,14 @@ section {
 
     .section-title {
         font-size: 2rem;
+    }
+
+    .employment-note {
         gap: 0.5rem;
     }
 
-    .section-title::before,
-    .section-title::after {
+    .employment-note::before,
+    .employment-note::after {
         width: 20px;
         height: 50px;
     }
@@ -677,16 +696,6 @@ section {
 
     .hero-title {
         font-size: 4rem;
-    }
-
-    .section-title {
-        gap: 1.5rem;
-    }
-
-    .section-title::before,
-    .section-title::after {
-        width: 40px;
-        height: 90px;
     }
 
     .skill-card {
