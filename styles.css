@@ -288,10 +288,9 @@ section {
 .employment-note::before {
     content: '';
     display: block;
-    width: clamp(15px, 4vw, 30px);
-    min-height: 100%;
+    aspect-ratio: 1 / 3;
     background-image: url('assets/bracket-left.svg');
-    background-size: 100% 100%;
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     flex-shrink: 0;
@@ -300,10 +299,9 @@ section {
 .employment-note::after {
     content: '';
     display: block;
-    width: clamp(15px, 4vw, 30px);
-    min-height: 100%;
+    aspect-ratio: 1 / 3;
     background-image: url('assets/bracket-right.svg');
-    background-size: 100% 100%;
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     flex-shrink: 0;
@@ -675,12 +673,6 @@ section {
     .employment-note {
         gap: 0.25rem;
         padding: 0 0.25rem;
-    }
-
-    .employment-note::before,
-    .employment-note::after {
-        width: 12px;
-        min-width: 10px;
     }
 }
 
