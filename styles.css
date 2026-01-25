@@ -281,12 +281,15 @@ section {
     align-items: stretch;
     justify-content: center;
     gap: 1rem;
+    max-width: 700px;
+    margin: 0 auto;
 }
 
 .employment-note::before {
     content: '';
-    display: inline-block;
-    width: 30px;
+    display: block;
+    width: clamp(15px, 4vw, 30px);
+    min-height: 100%;
     background-image: url('assets/bracket-left.svg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -296,8 +299,9 @@ section {
 
 .employment-note::after {
     content: '';
-    display: inline-block;
-    width: 30px;
+    display: block;
+    width: clamp(15px, 4vw, 30px);
+    min-height: 100%;
     background-image: url('assets/bracket-right.svg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -650,12 +654,7 @@ section {
 
     .employment-note {
         gap: 0.5rem;
-    }
-
-    .employment-note::before,
-    .employment-note::after {
-        width: 20px;
-        height: 50px;
+        padding: 0 0.5rem;
     }
 
     .skill-card {
@@ -668,6 +667,20 @@ section {
 
     .contact-methods {
         grid-template-columns: 1fr;
+    }
+}
+
+/* ===== Extra Small Screens ===== */
+@media (max-width: 480px) {
+    .employment-note {
+        gap: 0.25rem;
+        padding: 0 0.25rem;
+    }
+
+    .employment-note::before,
+    .employment-note::after {
+        width: 12px;
+        min-width: 10px;
     }
 }
 
