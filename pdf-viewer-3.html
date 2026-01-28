@@ -118,14 +118,48 @@
             flex-direction: column;
         }
 
-        .pdf-object {
+        .pdf-canvas-container {
             width: 100%;
-            height: 100%;
-            min-height: 800px;
-            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
         }
 
-        .pdf-fallback {
+        .pdf-canvas-container canvas {
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .pdf-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 2rem;
+            text-align: center;
+            min-height: 400px;
+            color: var(--dark-color);
+            font-size: 1.1rem;
+        }
+
+        .pdf-loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--light-bg);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .pdf-error {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -135,20 +169,20 @@
             min-height: 400px;
         }
 
-        .pdf-fallback h3 {
+        .pdf-error h3 {
             color: var(--dark-color);
             margin-bottom: 1rem;
             font-size: 1.5rem;
         }
 
-        .pdf-fallback p {
+        .pdf-error p {
             color: #666;
             margin-bottom: 2rem;
             font-size: 1.1rem;
             max-width: 600px;
         }
 
-        .pdf-fallback-buttons {
+        .pdf-error-buttons {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
@@ -171,10 +205,6 @@
             }
 
             .pdf-viewer-wrapper {
-                min-height: 600px;
-            }
-
-            .pdf-object {
                 min-height: 600px;
             }
         }
@@ -203,52 +233,66 @@
             </div>
 
             <div class="pdf-viewer-wrapper">
-                <object
-                    id="pdf-object"
-                    data="assets/WRH_Pain_Brochure.pdf#toolbar=1&navpanes=0&scrollbar=1&zoom=45&view=FitV"
-                    type="application/pdf"
-                    class="pdf-object">
-
-                    <!-- Fallback content if object tag doesn't work -->
-                    <div class="pdf-fallback">
-                        <h3>PDF Preview Not Available</h3>
-                        <p>Your browser cannot display this PDF inline. Please use one of the options below to view the document.</p>
-                        <div class="pdf-fallback-buttons">
-                            <a href="assets/WRH_Pain_Brochure.pdf" target="_blank" class="control-button">
-                                Open PDF in New Tab
-                            </a>
-                            <a href="assets/WRH_Pain_Brochure.pdf" download class="control-button secondary">
-                                Download PDF File
-                            </a>
-                        </div>
+                <div id="pdf-canvas-container" class="pdf-canvas-container">
+                    <div class="pdf-loading">
+                        <div class="pdf-loading-spinner"></div>
+                        Loading PDF...
                     </div>
-                </object>
+                </div>
             </div>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>
-        // Simple PDF viewer with graceful fallback
         (function() {
-            const pdfObject = document.getElementById('pdf-object');
+            var pdfUrl = 'assets/WRH_Pain_Brochure.pdf';
+            var container = document.getElementById('pdf-canvas-container');
 
-            // Log for debugging
-            console.log('PDF Viewer initialized');
-            console.log('PDF URL:', pdfObject.data);
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-            // Check if PDF loaded after a short delay
-            setTimeout(function() {
-                try {
-                    // Test if object loaded successfully
-                    if (pdfObject.offsetHeight === 0) {
-                        console.log('PDF object failed to load, fallback content should be visible');
-                    } else {
-                        console.log('PDF object appears to have loaded successfully');
-                    }
-                } catch (e) {
-                    console.error('Error checking PDF load status:', e);
+            pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
+                container.innerHTML = '';
+                var numPages = pdf.numPages;
+
+                function renderPage(pageNum) {
+                    return pdf.getPage(pageNum).then(function(page) {
+                        var containerWidth = container.clientWidth - 32;
+                        var defaultViewport = page.getViewport({ scale: 1 });
+                        var scale = containerWidth / defaultViewport.width;
+                        if (scale > 2) scale = 2;
+                        var viewport = page.getViewport({ scale: scale });
+
+                        var canvas = document.createElement('canvas');
+                        canvas.width = viewport.width;
+                        canvas.height = viewport.height;
+                        container.appendChild(canvas);
+
+                        var context = canvas.getContext('2d');
+                        return page.render({ canvasContext: context, viewport: viewport }).promise;
+                    });
                 }
-            }, 2000);
+
+                var chain = Promise.resolve();
+                for (var i = 1; i <= numPages; i++) {
+                    (function(pageNum) {
+                        chain = chain.then(function() {
+                            return renderPage(pageNum);
+                        });
+                    })(i);
+                }
+            }).catch(function(error) {
+                console.error('PDF load error:', error);
+                container.innerHTML =
+                    '<div class="pdf-error">' +
+                        '<h3>PDF Preview Not Available</h3>' +
+                        '<p>Unable to load the PDF inline. Please use one of the options below to view the document.</p>' +
+                        '<div class="pdf-error-buttons">' +
+                            '<a href="' + pdfUrl + '" target="_blank" class="control-button">Open PDF in New Tab</a>' +
+                            '<a href="' + pdfUrl + '" download class="control-button secondary">Download PDF File</a>' +
+                        '</div>' +
+                    '</div>';
+            });
         })();
     </script>
 </body>
