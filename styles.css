@@ -486,6 +486,16 @@ section {
     color: var(--white);
 }
 
+.contact-resume {
+    background: var(--dark-color);
+    color: var(--white);
+}
+
+.contact-resume h3,
+.contact-resume a {
+    color: var(--white);
+}
+
 .contact-method:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-lg);
@@ -503,6 +513,10 @@ section {
     background: var(--primary-color);
 }
 
+.contact-resume:hover {
+    background: var(--primary-color);
+}
+
 .contact-icon {
     font-size: 2.5rem;
     margin-bottom: 0.25rem;
@@ -513,6 +527,11 @@ section {
 }
 
 .contact-work .contact-icon svg {
+    position: relative;
+    top: 17px;
+}
+
+.contact-resume .contact-icon svg {
     position: relative;
     top: 17px;
 }
